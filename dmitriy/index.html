@@ -1,0 +1,1139 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Дмитрий Зайцев — заявка</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap">
+<style>
+/* Layout: одна мобильная колонка до 480px; фирменные цвета блога — тёмно-синий, коралловый, жёлтый;
+   заголовки — узкий капс (как в каруселях), карточки на кремовом фоне. Клиент проходит воронку
+   «главная → анкета → расчёт и запись → готово», тренер видит входящие заявки. */
+:root {
+  --bg: #FBF6EE;
+  --card: #FFFFFF;
+  --ink: #161D45;
+  --muted: #6E7191;
+  --line: rgba(22, 29, 69, .1);
+  --navy: #26338F;
+  --navy-deep: #1A2470;
+  --navy-soft: #E7EAFB;
+  --coral: #EE5A52;
+  --coral-soft: #FDE6E3;
+  --sun: #FFC53D;
+  --sun-soft: #FFF2CC;
+  --mint: #1F9D73;
+  --mint-soft: #DDF4EA;
+  --on-navy: #FFFFFF;
+  --field: #F5F1EA;
+  --shadow: 0 12px 30px -18px rgba(22, 29, 69, .35), 0 1px 3px rgba(22, 29, 69, .06);
+  --f-display: "Oswald", "Arial Narrow", Impact, sans-serif;
+  --f-body: "Manrope", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --r-lg: 22px;
+  --r-md: 16px;
+  --r-sm: 12px;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0D1124; --card: #171D3B; --ink: #F3F0E8; --muted: #9EA3C4; --line: rgba(255, 255, 255, .1);
+    --navy: #8E9CFF; --navy-deep: #1E2766; --navy-soft: rgba(142, 156, 255, .14);
+    --coral: #FF7C72; --coral-soft: rgba(255, 124, 114, .15);
+    --sun: #FFCF5C; --sun-soft: rgba(255, 207, 92, .14);
+    --mint: #5FD3A8; --mint-soft: rgba(95, 211, 168, .14);
+    --field: #20274A; --shadow: 0 12px 30px -18px rgba(0, 0, 0, .8);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0D1124; --card: #171D3B; --ink: #F3F0E8; --muted: #9EA3C4; --line: rgba(255, 255, 255, .1);
+  --navy: #8E9CFF; --navy-deep: #1E2766; --navy-soft: rgba(142, 156, 255, .14);
+  --coral: #FF7C72; --coral-soft: rgba(255, 124, 114, .15);
+  --sun: #FFCF5C; --sun-soft: rgba(255, 207, 92, .14);
+  --mint: #5FD3A8; --mint-soft: rgba(95, 211, 168, .14);
+  --field: #20274A; --shadow: 0 12px 30px -18px rgba(0, 0, 0, .8);
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html, body { margin: 0; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--f-body);
+  font-size: 15px;
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+  min-height: 100vh;
+}
+button, input, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; }
+:focus-visible { outline: 2px solid var(--coral); outline-offset: 2px; }
+img { display: block; max-width: 100%; }
+
+.app {
+  max-width: 480px;
+  margin: 0 auto;
+  padding-inline: 16px;
+  padding-block: calc(12px + env(safe-area-inset-top, 0px)) calc(110px + env(safe-area-inset-bottom, 0px));
+}
+.view { display: flex; flex-direction: column; gap: 22px; animation: viewIn .32s cubic-bezier(.2, .8, .2, 1); }
+@keyframes viewIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+h1, h2, h3 { margin: 0; text-wrap: balance; }
+.caps { font-family: var(--f-display); text-transform: uppercase; font-weight: 600; letter-spacing: .01em; line-height: 1.05; }
+.h-page { font-size: 34px; }
+.h-sec { font-family: var(--f-display); text-transform: uppercase; font-size: 21px; font-weight: 600; letter-spacing: .01em; }
+.hl { color: var(--coral); }
+.eyebrow { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .14em; color: var(--muted); }
+.muted { color: var(--muted); }
+.num { font-variant-numeric: tabular-nums; }
+.sec { display: flex; flex-direction: column; gap: 12px; }
+.card { background: var(--card); border-radius: var(--r-lg); box-shadow: var(--shadow); border: 1px solid var(--line); }
+.ic { width: 20px; height: 20px; flex: none; }
+
+/* ---------- Demo mode switch ---------- */
+.demo-bar { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 14px; }
+.demo-bar .eyebrow { font-size: 10px; }
+.mode { display: inline-flex; padding: 3px; border-radius: 999px; background: var(--card); border: 1px solid var(--line); }
+.mode button { border: 0; background: none; padding: 6px 12px; border-radius: 999px; font-size: 12.5px; font-weight: 800; color: var(--muted); display: inline-flex; gap: 6px; align-items: center; }
+.mode button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+.mode .dot { min-width: 18px; height: 18px; border-radius: 9px; background: var(--coral); color: #fff; font-size: 11px; display: inline-grid; place-items: center; padding: 0 5px; }
+
+/* ---------- Header ---------- */
+.top { display: flex; align-items: center; gap: 12px; }
+.ava { width: 48px; height: 48px; border-radius: 50%; overflow: hidden; flex: none; background: var(--sun); box-shadow: 0 0 0 3px var(--card), 0 0 0 5px var(--sun); }
+.ava img { width: 100%; height: 100%; object-fit: cover; }
+.top b { display: block; font-size: 16px; font-weight: 800; }
+.top .st { font-size: 12.5px; color: var(--muted); font-weight: 600; display: flex; align-items: center; gap: 6px; }
+.top .st i { width: 8px; height: 8px; border-radius: 50%; background: var(--mint); box-shadow: 0 0 0 3px var(--mint-soft); }
+
+/* ---------- Hero ---------- */
+.hero { position: relative; overflow: hidden; border-radius: 26px; background: var(--navy-deep); color: var(--on-navy); padding: 22px 20px 20px; min-height: 340px; display: flex; flex-direction: column; }
+.hero-photo { position: absolute; right: -40px; top: 0; width: 72%; height: 100%; object-fit: cover; object-position: 30% 0; -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 38%); mask-image: linear-gradient(to right, transparent 0%, #000 38%); opacity: .95; }
+.hero::after { content: ""; position: absolute; inset: auto 0 0 0; height: 55%; background: linear-gradient(to top, var(--navy-deep) 30%, transparent); pointer-events: none; }
+.hero > *:not(img) { position: relative; z-index: 1; }
+.hero .tag { align-self: flex-start; background: var(--sun); color: #161D45; font-weight: 800; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; padding: 5px 10px; border-radius: 8px; }
+.hero h1 { font-size: 40px; margin-top: 14px; max-width: 64%; }
+.hero h1 span { color: var(--sun); }
+.hero p { margin: auto 0 14px; padding-top: 70px; font-size: 14.5px; max-width: 92%; color: rgba(255, 255, 255, .86); }
+
+.btn { border: 0; border-radius: 16px; padding: 16px 18px; font-weight: 800; font-size: 15.5px; display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; transition: transform .15s, opacity .2s; text-align: left; }
+.btn:active { transform: scale(.98); }
+.btn:disabled { opacity: .45; cursor: not-allowed; }
+.btn-coral { background: var(--coral); color: #fff; box-shadow: 0 12px 24px -12px rgba(238, 90, 82, .9); }
+.btn-sun { background: var(--sun); color: #161D45; }
+.btn-ghost { background: var(--card); border: 1px solid var(--line); color: var(--ink); justify-content: center; }
+.btn small { display: block; font-weight: 600; font-size: 12px; opacity: .85; }
+.btn .arr { width: 34px; height: 34px; border-radius: 11px; background: rgba(255, 255, 255, .22); display: grid; place-items: center; flex: none; }
+
+.facts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.fact { padding: 12px 10px; border-radius: var(--r-md); background: var(--card); border: 1px solid var(--line); }
+.fact b { font-family: var(--f-display); font-size: 20px; font-weight: 600; display: block; line-height: 1.1; }
+.fact span { font-size: 11.5px; color: var(--muted); font-weight: 600; line-height: 1.3; display: block; margin-top: 3px; }
+
+.pains { display: flex; flex-wrap: wrap; gap: 8px; }
+.pain { padding: 8px 12px; border-radius: 999px; background: var(--card); border: 1px solid var(--line); font-size: 13px; font-weight: 700; }
+.pain:nth-child(3n+1) { background: var(--coral-soft); border-color: transparent; }
+.pain:nth-child(3n+2) { background: var(--sun-soft); border-color: transparent; }
+.pain:nth-child(3n) { background: var(--navy-soft); border-color: transparent; }
+
+.prog { display: grid; grid-template-columns: 44px 1fr; gap: 4px 12px; padding: 16px; align-items: start; }
+.prog .p-ic { grid-row: span 3; width: 44px; height: 44px; border-radius: 14px; display: grid; place-items: center; }
+.prog .p-ic svg { width: 22px; height: 22px; }
+.prog b { font-size: 15.5px; font-weight: 800; }
+.prog p { margin: 0; font-size: 13px; color: var(--muted); }
+.prog .price { font-family: var(--f-display); font-size: 17px; font-weight: 600; margin-top: 4px; }
+.prog .price small { font-family: var(--f-body); font-size: 12px; color: var(--muted); font-weight: 600; text-transform: none; }
+.t-coral { background: var(--coral-soft); color: var(--coral); }
+.t-sun { background: var(--sun-soft); color: #B07A00; }
+.t-navy { background: var(--navy-soft); color: var(--navy); }
+.t-mint { background: var(--mint-soft); color: var(--mint); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .t-sun { color: var(--sun); } }
+:root[data-theme="dark"] .t-sun { color: var(--sun); }
+
+.steps { counter-reset: s; display: flex; flex-direction: column; gap: 0; padding: 6px 16px; }
+.step { display: grid; grid-template-columns: 32px 1fr; gap: 12px; padding: 12px 0; border-bottom: 1px dashed var(--line); }
+.step:last-child { border-bottom: 0; }
+.step::before { counter-increment: s; content: counter(s); width: 32px; height: 32px; border-radius: 50%; background: var(--ink); color: var(--bg); font-family: var(--f-display); font-weight: 600; display: grid; place-items: center; font-size: 15px; }
+.step b { display: block; font-size: 14.5px; }
+.step span { font-size: 13px; color: var(--muted); }
+
+.cert { padding: 14px; display: flex; flex-direction: column; gap: 12px; }
+.cert button { border: 0; padding: 0; background: none; border-radius: 12px; overflow: hidden; }
+.cert img { width: 100%; aspect-ratio: 760 / 576; object-fit: cover; }
+.cert-rows { display: flex; flex-wrap: wrap; gap: 6px; }
+.cert-rows span { font-size: 12px; font-weight: 700; padding: 5px 9px; border-radius: 8px; background: var(--field); }
+
+.faq { padding: 4px 16px; }
+.faq details { border-bottom: 1px solid var(--line); }
+.faq details:last-child { border-bottom: 0; }
+.faq summary { list-style: none; padding: 14px 0; font-weight: 800; font-size: 14.5px; display: flex; justify-content: space-between; gap: 12px; cursor: pointer; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; font-family: var(--f-display); font-size: 22px; line-height: 1; color: var(--coral); transition: transform .2s; }
+.faq details[open] summary::after { transform: rotate(45deg); }
+.faq p { margin: 0 0 14px; font-size: 13.5px; color: var(--muted); }
+
+/* ---------- Sticky bottom bar ---------- */
+.bar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; padding: 12px 16px calc(12px + env(safe-area-inset-bottom, 0px)); background: linear-gradient(to top, var(--bg) 65%, transparent); }
+.bar-in { max-width: 448px; margin: 0 auto; display: flex; gap: 10px; }
+
+/* ---------- Quiz ---------- */
+.q-top { display: flex; align-items: center; gap: 12px; }
+.back { width: 40px; height: 40px; border-radius: 12px; border: 1px solid var(--line); background: var(--card); display: grid; place-items: center; flex: none; }
+.progress { flex: 1; height: 6px; border-radius: 3px; background: var(--line); overflow: hidden; }
+.progress i { display: block; height: 100%; background: var(--coral); border-radius: 3px; transition: width .35s; }
+.q-count { font-size: 12.5px; font-weight: 800; color: var(--muted); min-width: 34px; text-align: right; }
+.q-head p { margin: 8px 0 0; color: var(--muted); font-size: 14px; }
+.q-head h1 { font-size: 30px; }
+.opts { display: flex; flex-direction: column; gap: 10px; }
+.opt { display: flex; align-items: center; gap: 12px; padding: 14px; border-radius: var(--r-md); background: var(--card); border: 1.5px solid var(--line); text-align: left; transition: border-color .15s, background .15s, transform .12s; }
+.opt:active { transform: scale(.985); }
+.opt .o-ic { width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center; flex: none; font-size: 20px; }
+.opt b { display: block; font-size: 15px; font-weight: 800; }
+.opt span.d { font-size: 12.5px; color: var(--muted); }
+.opt .tick { margin-left: auto; width: 24px; height: 24px; border-radius: 8px; border: 1.5px solid var(--line); flex: none; display: grid; place-items: center; color: transparent; }
+.opt.radio .tick { border-radius: 50%; }
+.opt[aria-pressed="true"] { border-color: var(--coral); background: var(--coral-soft); }
+.opt[aria-pressed="true"] .tick { background: var(--coral); border-color: var(--coral); color: #fff; }
+.opt .tick svg { width: 14px; height: 14px; }
+.sub-q { font-weight: 800; font-size: 14px; margin-top: 4px; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { padding: 10px 14px; border-radius: 12px; border: 1.5px solid var(--line); background: var(--card); font-weight: 700; font-size: 14px; }
+.chip[aria-pressed="true"] { border-color: var(--coral); background: var(--coral-soft); }
+
+.fields { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field.wide { grid-column: 1 / -1; }
+.field label { font-size: 12.5px; font-weight: 800; color: var(--muted); }
+.inp { position: relative; }
+.inp input, .inp textarea { width: 100%; border: 1.5px solid transparent; background: var(--card); border-radius: 14px; padding: 14px; font-size: 17px; font-weight: 700; box-shadow: var(--shadow); outline: none; }
+.inp textarea { font-size: 15px; font-weight: 600; resize: none; min-height: 80px; }
+.inp input:focus, .inp textarea:focus { border-color: var(--coral); }
+.inp input[aria-invalid="true"] { border-color: var(--coral); background: var(--coral-soft); }
+.inp .unit { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); font-size: 13px; font-weight: 700; color: var(--muted); pointer-events: none; }
+.hint { font-size: 12.5px; color: var(--muted); }
+.err { font-size: 12.5px; color: var(--coral); font-weight: 700; min-height: 18px; }
+.consent { display: flex; gap: 10px; align-items: flex-start; font-size: 12.5px; color: var(--muted); }
+.consent input { width: 20px; height: 20px; accent-color: var(--coral); margin: 0; flex: none; }
+.live { padding: 12px 14px; border-radius: 14px; background: var(--sun-soft); font-size: 13px; font-weight: 600; display: flex; gap: 10px; align-items: center; }
+.live b { font-family: var(--f-display); font-size: 18px; font-weight: 600; }
+
+/* ---------- Result ---------- */
+.plan { background: var(--navy-deep); color: var(--on-navy); border-radius: 24px; padding: 20px; display: flex; flex-direction: column; gap: 16px; position: relative; overflow: hidden; }
+.plan::before { content: ""; position: absolute; width: 180px; height: 180px; border-radius: 50%; right: -80px; top: -100px; background: var(--coral); opacity: .9; }
+.plan::after { content: ""; position: absolute; width: 56px; height: 56px; border-radius: 50%; right: 56px; top: 34px; background: var(--sun); }
+.plan > * { position: relative; z-index: 1; }
+.plan .eyebrow { color: rgba(255, 255, 255, .7); }
+.plan .kcal { font-family: var(--f-display); font-size: 58px; font-weight: 600; line-height: 1; }
+.plan .kcal small { font-size: 18px; color: rgba(255, 255, 255, .75); margin-left: 6px; }
+.macros { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.macros div { background: rgba(255, 255, 255, .1); border-radius: 14px; padding: 10px; }
+.macros b { font-family: var(--f-display); font-size: 20px; font-weight: 600; display: block; }
+.macros span { font-size: 11.5px; color: rgba(255, 255, 255, .75); font-weight: 600; }
+.plan .note { font-size: 13px; color: rgba(255, 255, 255, .85); background: rgba(255, 255, 255, .08); padding: 10px 12px; border-radius: 12px; }
+
+.tips { padding: 6px 16px; }
+.tip { display: grid; grid-template-columns: 28px 1fr; gap: 10px; padding: 12px 0; border-bottom: 1px dashed var(--line); font-size: 13.5px; }
+.tip:last-child { border-bottom: 0; }
+.tip i { font-style: normal; width: 28px; height: 28px; border-radius: 9px; display: grid; place-items: center; font-size: 15px; }
+.tip b { display: block; font-size: 14px; }
+
+.rec { padding: 16px; display: flex; flex-direction: column; gap: 10px; border: 2px solid var(--coral); }
+.rec ul { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 7px; font-size: 13.5px; }
+.rec li { display: flex; gap: 8px; }
+.rec li svg { width: 18px; height: 18px; color: var(--mint); flex: none; margin-top: 1px; }
+.rec .rec-head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+.rec .rec-head b { font-size: 16px; }
+.rec .rec-head .price { font-family: var(--f-display); font-size: 18px; font-weight: 600; white-space: nowrap; }
+
+.days { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; margin-inline: -16px; padding: 2px 16px 4px; }
+.days::-webkit-scrollbar { display: none; }
+.day { flex: none; width: 62px; padding: 10px 0; border-radius: 16px; border: 1.5px solid var(--line); background: var(--card); text-align: center; }
+.day span { display: block; font-size: 11.5px; font-weight: 800; color: var(--muted); text-transform: uppercase; }
+.day b { display: block; font-family: var(--f-display); font-size: 22px; font-weight: 600; margin-top: 2px; }
+.day[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.day[aria-pressed="true"] span { color: inherit; opacity: .75; }
+.slots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.slot { padding: 12px 6px; border-radius: 14px; border: 1.5px solid var(--line); background: var(--card); font-weight: 800; font-size: 15px; text-align: center; }
+.slot small { display: block; font-size: 11px; font-weight: 700; color: var(--muted); }
+.slot:disabled { background: transparent; border-style: dashed; color: var(--muted); text-decoration: line-through; opacity: .6; cursor: not-allowed; }
+.slot[aria-pressed="true"] { background: var(--coral); border-color: var(--coral); color: #fff; }
+.slot[aria-pressed="true"] small { color: rgba(255, 255, 255, .85); }
+.skip { background: none; border: 0; color: var(--muted); font-weight: 700; font-size: 13px; text-decoration: underline; text-underline-offset: 3px; padding: 4px; align-self: center; }
+
+/* ---------- Done ---------- */
+.done-hero { text-align: center; display: flex; flex-direction: column; align-items: center; gap: 10px; padding-top: 18px; }
+.done-badge { width: 84px; height: 84px; border-radius: 28px; background: var(--mint); color: #fff; display: grid; place-items: center; transform: rotate(-6deg); box-shadow: 0 16px 30px -14px var(--mint); }
+.done-badge svg { width: 42px; height: 42px; }
+.done-hero h1 { font-size: 34px; }
+.done-hero p { margin: 0; color: var(--muted); max-width: 330px; }
+.summary { padding: 6px 16px; }
+.summary div { display: flex; justify-content: space-between; gap: 14px; padding: 12px 0; border-bottom: 1px solid var(--line); font-size: 14px; }
+.summary div:last-child { border-bottom: 0; }
+.summary span { color: var(--muted); font-weight: 600; }
+.summary b { text-align: right; }
+
+/* ---------- Trainer ---------- */
+.kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.kpi { padding: 12px; border-radius: var(--r-md); background: var(--card); border: 1px solid var(--line); }
+.kpi b { font-family: var(--f-display); font-size: 28px; font-weight: 600; display: block; line-height: 1.05; }
+.kpi span { font-size: 11.5px; font-weight: 700; color: var(--muted); line-height: 1.25; display: block; margin-top: 2px; }
+.kpi.accent { background: var(--navy-deep); color: #fff; border-color: transparent; }
+.kpi.accent span { color: rgba(255, 255, 255, .75); }
+.auto { display: flex; gap: 12px; padding: 14px; align-items: center; background: var(--sun-soft); border-radius: var(--r-md); }
+.auto .a-ic { width: 40px; height: 40px; border-radius: 12px; background: var(--sun); color: #161D45; display: grid; place-items: center; flex: none; }
+.auto p { margin: 0; font-size: 13px; }
+.auto b { font-size: 14px; display: block; }
+.filters { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; margin-inline: -16px; padding: 0 16px 2px; }
+.filters::-webkit-scrollbar { display: none; }
+.filters button { flex: none; border: 1px solid var(--line); background: var(--card); border-radius: 999px; padding: 8px 14px; font-weight: 800; font-size: 13px; }
+.filters button[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.filters button em { font-style: normal; opacity: .6; margin-left: 4px; }
+.leads { display: flex; flex-direction: column; gap: 10px; }
+.lead { text-align: left; border: 1px solid var(--line); background: var(--card); border-radius: var(--r-lg); padding: 14px; display: flex; flex-direction: column; gap: 10px; box-shadow: var(--shadow); width: 100%; }
+.lead.fresh { border: 2px solid var(--coral); }
+.lead-top { display: flex; align-items: center; gap: 10px; }
+.l-ava { width: 40px; height: 40px; border-radius: 13px; display: grid; place-items: center; font-family: var(--f-display); font-size: 17px; font-weight: 600; flex: none; }
+.lead-top b { font-size: 15px; display: block; }
+.lead-top .when { font-size: 12px; color: var(--muted); font-weight: 600; }
+.temp { margin-left: auto; font-size: 11px; font-weight: 800; padding: 4px 8px; border-radius: 8px; white-space: nowrap; }
+.temp.hot { background: var(--coral-soft); color: var(--coral); }
+.temp.warm { background: var(--sun-soft); color: #A06F00; }
+.temp.cold { background: var(--navy-soft); color: var(--navy); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .temp.warm { color: var(--sun); } }
+:root[data-theme="dark"] .temp.warm { color: var(--sun); }
+.lead-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.lead-tags span { font-size: 12px; font-weight: 700; padding: 4px 8px; border-radius: 8px; background: var(--field); }
+.lead-foot { display: flex; justify-content: space-between; align-items: center; gap: 10px; font-size: 12.5px; font-weight: 700; padding-top: 10px; border-top: 1px dashed var(--line); }
+.lead-foot .slotline { display: flex; align-items: center; gap: 6px; color: var(--ink); }
+.lead-foot .slotline svg { width: 16px; height: 16px; color: var(--coral); }
+.status { padding: 4px 9px; border-radius: 8px; font-size: 11.5px; font-weight: 800; }
+.st-new { background: var(--coral); color: #fff; }
+.st-consult { background: var(--navy-soft); color: var(--navy); }
+.st-client { background: var(--mint-soft); color: var(--mint); }
+.st-lost { background: var(--field); color: var(--muted); }
+.empty { text-align: center; padding: 28px 16px; color: var(--muted); font-weight: 600; }
+
+/* ---------- Sheet & toast ---------- */
+.scrim { position: fixed; inset: 0; z-index: 50; background: rgba(10, 13, 32, .5); display: flex; align-items: flex-end; justify-content: center; animation: fade .2s; }
+@keyframes fade { from { opacity: 0; } }
+.sheet { width: 100%; max-width: 480px; max-height: 88vh; overflow-y: auto; background: var(--bg); border-radius: 26px 26px 0 0; padding: 10px 16px calc(20px + env(safe-area-inset-bottom, 0px)); animation: up .3s cubic-bezier(.2, .8, .2, 1); display: flex; flex-direction: column; gap: 16px; }
+@keyframes up { from { transform: translateY(40px); opacity: .5; } }
+.sheet > * { flex: none; }
+.plan.mini::before, .plan.mini::after { display: none; }
+.grip { width: 40px; height: 5px; border-radius: 3px; background: var(--line); align-self: center; flex: none; }
+.sheet h3 { font-family: var(--f-display); text-transform: uppercase; font-weight: 600; font-size: 24px; }
+.kv { padding: 4px 14px; }
+.kv div { display: flex; justify-content: space-between; gap: 14px; padding: 10px 0; border-bottom: 1px solid var(--line); font-size: 13.5px; }
+.kv div:last-child { border-bottom: 0; }
+.kv span { color: var(--muted); font-weight: 600; flex: none; }
+.kv b { text-align: right; }
+.stat-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+.stat-row button { border: 1.5px solid var(--line); background: var(--card); border-radius: 12px; padding: 10px 4px; font-size: 12px; font-weight: 800; }
+.stat-row button[aria-pressed="true"] { border-color: var(--ink); background: var(--ink); color: var(--bg); }
+.row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.cert-big { border-radius: 14px; overflow: hidden; }
+.toast-wrap { position: fixed; left: 0; right: 0; bottom: calc(96px + env(safe-area-inset-bottom, 0px)); z-index: 60; display: flex; justify-content: center; pointer-events: none; padding: 0 16px; }
+.toast { background: var(--ink); color: var(--bg); padding: 12px 16px; border-radius: 14px; font-size: 13.5px; font-weight: 700; max-width: 420px; animation: up .3s; box-shadow: var(--shadow); }
+
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+@media (max-width: 360px) { .hero h1 { font-size: 34px; } .h-page { font-size: 30px; } .facts { grid-template-columns: 1fr 1fr; } }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-back" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="15.5" rx="4"/><path d="M8 3v4M16 3v4M3.5 10h17"/></g></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0C18.5 15.4 12 21 12 21z"/><circle cx="12" cy="10" r="2.3"/></g></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6.5" y="2.5" width="11" height="19" rx="3"/><path d="M10.5 18.5h3"/></g></symbol>
+  <symbol id="i-leaf" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19C5 10.5 11 5 20 4.5 20 13.5 14 19.5 5.5 19.5"/><path d="M5 19.5l7.5-7.5"/></g></symbol>
+  <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2.5L4.5 13.5H12l-1 8 8.5-11H12z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+  <symbol id="i-msg" viewBox="0 0 24 24"><path d="M4 5.5h16v10.5H9l-5 4z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="8" y="8" width="12" height="12" rx="3"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></g></symbol>
+</svg>
+
+<main class="app">
+  <div class="demo-bar">
+    <span class="eyebrow">Демо · режим просмотра</span>
+    <div class="mode" role="group" aria-label="Режим">
+      <button type="button" data-mode="client" aria-pressed="true">Клиент</button>
+      <button type="button" data-mode="coach" aria-pressed="false">Тренер <span class="dot" id="new-dot" hidden>0</span></button>
+    </div>
+  </div>
+  <div id="root"></div>
+</main>
+
+<div class="bar" id="bar" hidden><div class="bar-in" id="bar-in"></div></div>
+<div id="sheet-root"></div>
+<div class="toast-wrap" id="toast-root"></div>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ================= Настройки (то, что тренер меняет под себя) ================= */
+  const CONFIG = {
+    coachName: "Дмитрий Зайцев",
+    coachTz: 240,               // Батуми, GMT+4, в минутах
+    // Куда уходит заявка в боевой версии: вебхук бота / Google Apps Script / CRM.
+    // Пока пусто — заявка сохраняется только в демо-режиме «Тренер».
+    webhookUrl: "",
+    consultMinutes: 15,
+    consultTimes: ["10:00", "12:30", "16:00", "18:30", "20:00"],
+    programs: {
+      batumi:    { title: "Персональные тренировки в Батуми", price: "от 60 ₾", per: "за тренировку", icon: "i-pin", tone: "t-coral",
+                   short: "Зал, 60 минут, техника и программа под вашу цель.",
+                   items: ["Тренировки 1-на-1 в зале", "Рацион питания под цель", "Контроль замеров каждые 2 недели", "Связь в Telegram между тренировками"] },
+      online:    { title: "Онлайн-ведение", price: "от 120 $", per: "в месяц", icon: "i-phone", tone: "t-navy",
+                   short: "Из любой страны: программа, питание и ежедневная связь.",
+                   items: ["Программа тренировок дома или в зале", "Рацион на ваших продуктах", "Ежедневная связь и разбор отчётов", "Корректировка плана каждую неделю"] },
+      nutrition: { title: "Рацион питания под цель", price: "от 40 $", per: "разово", icon: "i-leaf", tone: "t-mint",
+                   short: "План питания без жёстких диет + список покупок.",
+                   items: ["Меню на 7 дней из привычных продуктов", "Расчёт КБЖУ и порций", "Список покупок", "2 недели ответов на вопросы"] }
+    }
+  };
+
+  /* ================= Telegram ================= */
+  const tg = window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.platform
+    && window.Telegram.WebApp.platform !== "unknown" ? window.Telegram.WebApp : null;
+  if (tg) {
+    tg.ready(); tg.expand();
+    try { if (tg.colorScheme) document.documentElement.dataset.theme = tg.colorScheme; } catch (e) { }
+  }
+  const tgUser = tg && tg.initDataUnsafe && tg.initDataUnsafe.user || null;
+  const haptic = t => { try { tg && tg.HapticFeedback && (t === "select" ? tg.HapticFeedback.selectionChanged() : tg.HapticFeedback.notificationOccurred(t)); } catch (e) { } };
+
+  /* ================= Утилиты ================= */
+  const $ = s => document.querySelector(s);
+  const esc = s => String(s == null ? "" : s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
+  const svg = (id, cls) => '<svg class="' + (cls || "ic") + '"><use href="#' + id + '"/></svg>';
+  const pad = n => String(n).padStart(2, "0");
+  const DAY_SHORT = ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"];
+  const DAY_FULL = ["воскресенье", "понедельник", "вторник", "среда", "четверг", "пятница", "суббота"];
+  const MONTH_GEN = ["января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря"];
+  const iso = d => d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate());
+  const parse = s => { const [y, m, d] = s.split("-").map(Number); return new Date(y, m - 1, d); };
+  const addDays = (d, n) => { const x = new Date(d); x.setDate(x.getDate() + n); return x; };
+  const TODAY = new Date(); TODAY.setHours(0, 0, 0, 0);
+  const fmtDay = s => { const d = parse(s); return DAY_SHORT[d.getDay()] + ", " + d.getDate() + " " + MONTH_GEN[d.getMonth()]; };
+  function plural(n, one, few, many) {
+    const a = n % 10, b = n % 100;
+    if (a === 1 && b !== 11) return one;
+    if (a >= 2 && a <= 4 && (b < 12 || b > 14)) return few;
+    return many;
+  }
+  function hash(s) { let x = 7; for (let i = 0; i < s.length; i++) x = (x * 31 + s.charCodeAt(i)) >>> 0; return x; }
+  function ago(ts) {
+    const m = Math.max(1, Math.round((Date.now() - ts) / 60000));
+    if (m < 60) return m + " мин назад";
+    const h = Math.round(m / 60);
+    if (h < 24) return h + " " + plural(h, "час", "часа", "часов") + " назад";
+    const d = Math.round(h / 24);
+    return d + " " + plural(d, "день", "дня", "дней") + " назад";
+  }
+
+  /* ================= Справочники анкеты ================= */
+  const GOALS = {
+    lose:     { t: "Сбросить лишний вес", e: "⚖️", tone: "t-coral", short: "Похудение" },
+    postpart: { t: "Вернуть форму после родов", e: "🤱", tone: "t-sun", short: "После родов" },
+    tone:     { t: "Подтянуть тело", d: "Упругость, «галифе», целлюлит", e: "🍑", tone: "t-navy", short: "Тонус" },
+    energy:   { t: "Вернуть энергию", d: "Нет сил, плохой сон, срывы", e: "⚡", tone: "t-mint", short: "Энергия" }
+  };
+  const PP_WHEN = { "lt6": "до 6 месяцев", "6to12": "6–12 месяцев", "1to3": "1–3 года", "gt3": "больше 3 лет" };
+  const ACTIVITY = {
+    0: { t: "Почти не двигаюсь", d: "Сидячая работа, мало шагов", f: 1.2 },
+    1: { t: "Хожу пешком, иногда спорт", d: "6–8 тыс. шагов в день", f: 1.375 },
+    2: { t: "Тренируюсь 2–3 раза в неделю", d: "", f: 1.5 },
+    3: { t: "Тренируюсь 4+ раз в неделю", d: "", f: 1.65 }
+  };
+  const FORMATS = {
+    batumi:  { t: "Персонально в Батуми", d: "Тренировки в зале с Дмитрием", e: "📍", prog: "batumi", short: "Батуми, зал" },
+    home:    { t: "Онлайн — тренировки дома", d: "Без зала, минимум инвентаря", e: "🏠", prog: "online", short: "Онлайн, дом" },
+    gym:     { t: "Онлайн — тренировки в зале", d: "Ваш зал, моя программа", e: "🏋️", prog: "online", short: "Онлайн, зал" },
+    food:    { t: "Только питание", d: "Рацион под цель без тренировок", e: "🥗", prog: "nutrition", short: "Питание" }
+  };
+  const STRUGGLES = {
+    evening: "Срываюсь вечером",
+    time: "Нет времени",
+    energy: "Нет сил и энергии",
+    food: "Не знаю, что есть",
+    plateau: "Вес стоит на месте",
+    yoyo: "Вес возвращается после диет",
+    fear: "Боюсь навредить после родов"
+  };
+  const START = {
+    now:   { t: "На этой неделе", d: "Хочу начать как можно скорее", e: "🔥" },
+    month: { t: "В течение месяца", d: "Нужно немного подготовиться", e: "📅" },
+    later: { t: "Пока просто изучаю", d: "Хочу понять, подойдёт ли мне", e: "👀" }
+  };
+  const STATUS = { new: "Новая", consult: "Консультация", client: "Клиент", lost: "Отказ" };
+  const TEMP = { hot: "🔥 Горячая", warm: "Тёплая", cold: "Холодная" };
+
+  /* ================= Расчёт плана ================= */
+  function calcPlan(a) {
+    const male = a.sex === "m";
+    const bf = a.goal === "postpart" && a.bf === "yes";
+    const bmr = 10 * a.w + 6.25 * a.h - 5 * a.age + (male ? 5 : -161);
+    let tdee = bmr * ACTIVITY[a.activity].f + (bf ? 400 : 0);
+    const toLose = Math.max(0, a.w - a.gw);
+    const deficit = toLose > 0 ? (bf ? 0.1 : (a.goal === "energy" ? 0.1 : 0.18)) : 0;
+    const floor = male ? 1700 : (bf ? 1800 : 1400);
+    const kcal = Math.max(floor, Math.round(tdee * (1 - deficit) / 50) * 50);
+    const base = toLose > 0 ? Math.max(a.gw, a.w - 15) : a.w;
+    const protein = Math.round(base * (male ? 1.8 : 1.6) / 5) * 5;
+    const fat = Math.round(kcal * 0.28 / 9 / 5) * 5;
+    const carbs = Math.max(0, Math.round((kcal - protein * 4 - fat * 9) / 4 / 5) * 5);
+    const water = Math.round((a.w * 0.03 + (bf ? 0.7 : 0)) * 10) / 10;
+    const pace = bf ? 0.35 : (a.w > 95 ? 0.8 : 0.55);
+    const weeks = toLose > 0 ? Math.max(4, Math.ceil(toLose / pace)) : 0;
+    const bmi = Math.round(a.w / Math.pow(a.h / 100, 2) * 10) / 10;
+    return { kcal, protein, fat, carbs, water, weeks, toLose: Math.round(toLose * 10) / 10, bmi, bf };
+  }
+  function temperature(a) {
+    if (a.start === "later") return "cold";
+    if (a.start === "now" && a.slot) return "hot";
+    return a.start === "now" ? "hot" : "warm";
+  }
+
+  /* ================= Хранилище ================= */
+  const KEY = "zaitsev-demo-v1";
+  function seedLeads() {
+    const h = 3600000, now = Date.now();
+    const slotIn = (days, time) => { let d = addDays(TODAY, days); if (d.getDay() === 0) d = addDays(d, 1); return { date: iso(d), time }; };
+    const L = [
+      { name: "Анна", contact: "@anna_mama3", messenger: "Telegram", city: "Тбилиси", goal: "postpart", sex: "f", ppWhen: "6to12", bf: "yes", age: 31, h: 166, w: 74, gw: 62, activity: 1, format: "home", struggles: ["evening", "energy", "fear"], start: "now", slot: slotIn(1, "18:30"), status: "new", createdAt: now - 2 * h, comment: "Кесарево год назад, врач разрешил нагрузки" },
+      { name: "Георгий", contact: "+995 555 12 34 56", messenger: "WhatsApp", city: "Батуми", goal: "lose", sex: "m", age: 38, h: 182, w: 104, gw: 88, activity: 0, format: "batumi", struggles: ["evening", "yoyo"], start: "now", slot: slotIn(1, "10:00"), status: "new", createdAt: now - 5 * h, comment: "" },
+      { name: "Ольга", contact: "@olga.s", messenger: "Instagram", city: "Варшава", goal: "postpart", sex: "f", ppWhen: "1to3", bf: "no", age: 34, h: 162, w: 69, gw: 58, activity: 1, format: "food", struggles: ["food", "plateau"], start: "month", slot: null, status: "new", createdAt: now - 9 * h, comment: "" },
+      { name: "Ирина", contact: "@irina_p", messenger: "Telegram", city: "Берлин", goal: "energy", sex: "f", age: 42, h: 170, w: 66, gw: 63, activity: 0, format: "home", struggles: ["energy", "time"], start: "later", slot: null, status: "new", createdAt: now - 26 * h, comment: "" },
+      { name: "Мария", contact: "@mariia_l", messenger: "Telegram", city: "Кишинёв", goal: "lose", sex: "f", age: 29, h: 168, w: 79, gw: 65, activity: 2, format: "gym", struggles: ["plateau", "food"], start: "now", slot: slotIn(2, "20:00"), status: "consult", createdAt: now - 30 * h, comment: "" },
+      { name: "Екатерина", contact: "+995 599 88 77 66", messenger: "WhatsApp", city: "Батуми", goal: "tone", sex: "f", age: 27, h: 172, w: 61, gw: 59, activity: 2, format: "batumi", struggles: ["time"], start: "now", slot: null, status: "client", createdAt: now - 72 * h, comment: "" },
+      { name: "Сергей", contact: "@serg_n", messenger: "Telegram", city: "Алматы", goal: "lose", sex: "m", age: 45, h: 176, w: 97, gw: 85, activity: 0, format: "home", struggles: ["time", "evening"], start: "month", slot: null, status: "lost", createdAt: now - 96 * h, comment: "" }
+    ];
+    return L.map((l, i) => Object.assign({ id: "s" + i, source: "Instagram" }, l));
+  }
+  let store;
+  try { store = JSON.parse(localStorage.getItem(KEY)); } catch (e) { store = null; }
+  if (!store || !Array.isArray(store.leads)) store = { leads: seedLeads(), seen: [] };
+  const save = () => { try { localStorage.setItem(KEY, JSON.stringify(store)); } catch (e) { } };
+
+  /* ================= Состояние ================= */
+  const blankAnswers = () => ({
+    goal: null, sex: null, ppWhen: null, bf: null,
+    age: "", h: "", w: "", gw: "",
+    activity: null, format: null, struggles: [], start: null,
+    name: tgUser ? [tgUser.first_name, tgUser.last_name].filter(Boolean).join(" ") : "",
+    contact: tgUser && tgUser.username ? "@" + tgUser.username : "",
+    messenger: "Telegram", city: "", comment: "", consent: true, slot: null
+  });
+  const ui = { mode: "client", view: "home", step: 0, a: blankAnswers(), day: null, filter: "all", lastLead: null };
+
+  /* Шаги анкеты строятся динамически: вопрос про роды показывается только тем, кому он нужен */
+  function steps() {
+    const s = ["goal"];
+    if (ui.a.goal !== "postpart") s.push("sex");
+    if (ui.a.goal === "postpart") s.push("pp");
+    s.push("body", "activity", "format", "struggles", "start", "contacts");
+    return s;
+  }
+
+  /* ================= Рендер: общий ================= */
+  function render() {
+    document.querySelectorAll(".mode button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.mode === ui.mode)));
+    const unseen = store.leads.filter(l => l.status === "new" && !store.seen.includes(l.id)).length;
+    const dot = $("#new-dot"); dot.hidden = !unseen; dot.textContent = unseen;
+    if (ui.mode === "coach") renderCoach();
+    else ({ home: renderHome, quiz: renderQuiz, result: renderResult, done: renderDone })[ui.view]();
+    syncBack();
+  }
+  function setBar(html) { const bar = $("#bar"); bar.hidden = !html; $("#bar-in").innerHTML = html || ""; }
+  function go(view) { ui.view = view; render(); window.scrollTo({ top: 0 }); }
+  function syncBack() {
+    if (!tg || !tg.BackButton) return;
+    const show = ui.mode === "client" && (ui.view === "quiz" || ui.view === "result");
+    show ? tg.BackButton.show() : tg.BackButton.hide();
+  }
+  function goBack() {
+    if (ui.view === "result") { ui.step = steps().length - 1; go("quiz"); return; }
+    if (ui.view === "quiz") { if (ui.step > 0) { ui.step--; render(); window.scrollTo({ top: 0 }); } else go("home"); }
+  }
+  if (tg && tg.BackButton) tg.BackButton.onClick(goBack);
+
+  /* ================= Клиент: главная ================= */
+  function renderHome() {
+    const P = CONFIG.programs;
+    $("#root").innerHTML =
+      '<section class="view">' +
+        '<header class="top">' +
+          '<div class="ava"><img src="img/avatar.jpg" alt=""></div>' +
+          '<div><b>' + esc(CONFIG.coachName) + '</b><div class="st"><i></i>Тренер онлайн · ответ за 2 минуты</div></div>' +
+        '</header>' +
+
+        '<div class="hero">' +
+          '<img class="hero-photo" src="img/hero.jpg" alt="">' +
+          '<span class="tag">Тренер онлайн · Батуми</span>' +
+          '<h1 class="caps">Энергия <span>и стройность</span></h1>' +
+          '<p>Без жёстких диет и срывов. Ответьте на 8 вопросов — сразу получите расчёт калорий и запишитесь на бесплатную консультацию.</p>' +
+        '</div>' +
+
+        '<div class="facts">' +
+          '<div class="fact"><b>С 2018</b><span>Сертифицированный тренер FPA</span></div>' +
+          '<div class="fact"><b>156 ч</b><span>Анатомия, физиология, питание</span></div>' +
+          '<div class="fact"><b>Онлайн</b><span>Ведение из любой страны</span></div>' +
+        '</div>' +
+
+        '<div class="sec">' +
+          '<h2 class="h-sec">Узнаёте себя?</h2>' +
+          '<div class="pains">' +
+            ['Вещи до родов не налезают', 'Мало ем, но не худею', 'Срываюсь вечером', 'Нет энергии', 'Вес стоит', '«Галифе» держится', 'Сплю по 3 часа'].map(t => '<span class="pain">' + t + '</span>').join("") +
+          '</div>' +
+        '</div>' +
+
+        '<div class="sec">' +
+          '<h2 class="h-sec">Форматы работы</h2>' +
+          Object.values(P).map(p =>
+            '<div class="card prog">' +
+              '<div class="p-ic ' + p.tone + '">' + svg(p.icon) + '</div>' +
+              '<b>' + esc(p.title) + '</b>' +
+              '<p>' + esc(p.short) + '</p>' +
+              '<div class="price caps">' + esc(p.price) + ' <small>' + esc(p.per) + '</small></div>' +
+            '</div>').join("") +
+        '</div>' +
+
+        '<div class="sec">' +
+          '<h2 class="h-sec">Как это работает</h2>' +
+          '<div class="card steps">' +
+            '<div class="step"><div><b>Анкета за 2 минуты</b><span>Цель, параметры, образ жизни — без переписки в директе.</span></div></div>' +
+            '<div class="step"><div><b>Расчёт сразу</b><span>Калории, белок и вода под вашу цель — прямо на экране.</span></div></div>' +
+            '<div class="step"><div><b>Бесплатная консультация 15 минут</b><span>Выбираете удобное время, Дмитрий уже видит вашу анкету.</span></div></div>' +
+            '<div class="step"><div><b>Старт программы</b><span>План тренировок и питания под вас, связь каждый день.</span></div></div>' +
+          '</div>' +
+        '</div>' +
+
+        '<div class="sec">' +
+          '<h2 class="h-sec">Образование</h2>' +
+          '<div class="card cert">' +
+            '<button type="button" id="cert-open" aria-label="Открыть сертификат"><img src="img/cert.jpg" alt="Сертификат FPA «Персональный фитнес-тренер», 2018" loading="lazy"></button>' +
+            '<div class="cert-rows">' +
+              ['Анатомия', 'Биомеханика', 'Физиология', 'Здоровье и безопасность', 'Питание', 'Методика фитнес-тренировки'].map(t => '<span>' + t + '</span>').join("") +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+
+        '<div class="sec">' +
+          '<h2 class="h-sec">Частые вопросы</h2>' +
+          '<div class="card faq">' + FAQ.map(f => '<details><summary>' + esc(f[0]) + '</summary><p>' + esc(f[1]) + '</p></details>').join("") + '</div>' +
+        '</div>' +
+      '</section>';
+
+    setBar('<button class="btn btn-coral" type="button" id="start"><span>Подобрать программу<small>8 вопросов · 2 минуты · бесплатно</small></span><span class="arr">' + svg("i-arrow") + '</span></button>');
+    $("#start").onclick = () => { haptic("select"); ui.step = 0; go("quiz"); };
+    $("#cert-open").onclick = () => openSheet('<h3>Сертификат FPA</h3><div class="cert-big"><img src="img/cert.jpg" alt="Сертификат FPA «Персональный фитнес-тренер», 2018"></div><p class="muted" style="margin:0;font-size:13.5px">Ассоциация профессионалов фитнеса, курс «Персональный фитнес-тренер», 2018 г. 156 часов: анатомия, биомеханика, физиология, питание, методика тренировок.</p>');
+  }
+
+  const FAQ = [
+    ["Сколько стоит?", "Онлайн-ведение — от 120 $ в месяц, персональные тренировки в Батуми — от 60 ₾, рацион питания — от 40 $. Точную стоимость Дмитрий назовёт на консультации после анкеты."],
+    ["Как проходит онлайн-ведение?", "Вы получаете программу тренировок и рацион в Telegram, каждый день присылаете короткий отчёт, раз в неделю — замеры и фото. Дмитрий корректирует план и отвечает на вопросы."],
+    ["Нужен ли зал?", "Нет. Можно заниматься дома с минимальным инвентарём, программа подстраивается под то, что у вас есть."],
+    ["Можно на ГВ или после кесарева?", "Да, если врач разрешил нагрузки. Питание при ГВ считается без жёсткого дефицита, тренировки — с упором на кор и восстановление."],
+    ["Будут жёсткие диеты?", "Нет. Рацион строится из привычных продуктов, с любимой едой и без запретов — иначе вес возвращается."],
+    ["Я не в Батуми — можно?", "Да, онлайн-ведение подходит для любой страны. Время консультации покажем в вашем часовом поясе."]
+  ];
+
+  /* ================= Клиент: анкета ================= */
+  function opt(group, key, o, pressed, radio) {
+    return '<button type="button" class="opt' + (radio ? " radio" : "") + '" data-g="' + group + '" data-k="' + key + '" aria-pressed="' + pressed + '">' +
+      (o.e ? '<span class="o-ic ' + (o.tone || "t-navy") + '">' + o.e + '</span>' : "") +
+      '<span><b>' + esc(o.t) + '</b>' + (o.d ? '<span class="d">' + esc(o.d) + '</span>' : "") + '</span>' +
+      '<span class="tick">' + svg("i-check") + '</span></button>';
+  }
+  function chip(group, key, label, pressed) {
+    return '<button type="button" class="chip" data-g="' + group + '" data-k="' + key + '" aria-pressed="' + pressed + '">' + esc(label) + '</button>';
+  }
+  function field(id, label, value, unit, attrs) {
+    return '<div class="field"><label for="' + id + '">' + label + '</label><div class="inp"><input id="' + id + '" value="' + esc(value) + '" ' + attrs + '>' + (unit ? '<span class="unit">' + unit + '</span>' : "") + '</div></div>';
+  }
+
+  function renderQuiz() {
+    const list = steps();
+    ui.step = Math.min(ui.step, list.length - 1);
+    const key = list[ui.step], a = ui.a;
+    let head = "", body = "", needNext = false;
+
+    if (key === "goal") {
+      head = '<h1 class="caps h-page">Какая у вас <span class="hl">главная цель?</span></h1>';
+      body = '<div class="opts">' + Object.entries(GOALS).map(([k, o]) => opt("goal", k, o, a.goal === k, true)).join("") + '</div>';
+    } else if (key === "sex") {
+      head = '<h1 class="caps h-page">Ваш пол</h1><p>Нужен для точного расчёта калорий.</p>';
+      body = '<div class="opts">' + opt("sex", "f", { t: "Женщина", e: "👩", tone: "t-coral" }, a.sex === "f", true) + opt("sex", "m", { t: "Мужчина", e: "👨", tone: "t-navy" }, a.sex === "m", true) + '</div>';
+    } else if (key === "pp") {
+      head = '<h1 class="caps h-page">Немного <span class="hl">о родах</span></h1><p>Чтобы нагрузка и питание были безопасными.</p>';
+      body = '<div class="sub-q">Сколько прошло после родов?</div><div class="chips">' + Object.entries(PP_WHEN).map(([k, t]) => chip("ppWhen", k, t, a.ppWhen === k)).join("") + '</div>' +
+        '<div class="sub-q">Кормите грудью?</div><div class="chips">' + chip("bf", "yes", "Да", a.bf === "yes") + chip("bf", "no", "Нет", a.bf === "no") + '</div>';
+      needNext = true;
+    } else if (key === "body") {
+      head = '<h1 class="caps h-page">Ваши <span class="hl">параметры</span></h1><p>Видит только Дмитрий. По ним считаем калории и сроки.</p>';
+      body = '<div class="fields">' +
+        field("f-age", "Возраст", a.age, "лет", 'inputmode="numeric" maxlength="2" autocomplete="off"') +
+        field("f-h", "Рост", a.h, "см", 'inputmode="numeric" maxlength="3" autocomplete="off"') +
+        field("f-w", "Вес сейчас", a.w, "кг", 'inputmode="decimal" maxlength="5" autocomplete="off"') +
+        field("f-gw", "Желаемый вес", a.gw, "кг", 'inputmode="decimal" maxlength="5" autocomplete="off"') +
+        '</div><div class="err" id="body-err"></div><div id="live"></div>';
+      needNext = true;
+    } else if (key === "activity") {
+      head = '<h1 class="caps h-page">Сколько вы <span class="hl">двигаетесь?</span></h1><p>Обычная неделя, без героизма.</p>';
+      body = '<div class="opts">' + Object.entries(ACTIVITY).map(([k, o]) => opt("activity", k, o, String(a.activity) === k, true)).join("") + '</div>';
+    } else if (key === "format") {
+      head = '<h1 class="caps h-page">Какой формат <span class="hl">удобнее?</span></h1>';
+      body = '<div class="opts">' + Object.entries(FORMATS).map(([k, o]) => opt("format", k, o, a.format === k, true)).join("") + '</div>';
+    } else if (key === "struggles") {
+      head = '<h1 class="caps h-page">Что <span class="hl">мешает</span> сейчас?</h1><p>Можно выбрать несколько.</p>';
+      const keys = Object.keys(STRUGGLES).filter(k => k !== "fear" || a.goal === "postpart");
+      body = '<div class="opts">' + keys.map(k => opt("struggles", k, { t: STRUGGLES[k] }, a.struggles.includes(k), false)).join("") + '</div>';
+      needNext = true;
+    } else if (key === "start") {
+      head = '<h1 class="caps h-page">Когда готовы <span class="hl">начать?</span></h1>';
+      body = '<div class="opts">' + Object.entries(START).map(([k, o]) => opt("start", k, Object.assign({ tone: k === "now" ? "t-coral" : k === "month" ? "t-sun" : "t-navy" }, o), a.start === k, true)).join("") + '</div>';
+    } else if (key === "contacts") {
+      head = '<h1 class="caps h-page">Куда прислать <span class="hl">ваш план?</span></h1><p>Дмитрий свяжется только по этой заявке.</p>';
+      body = '<div class="fields">' +
+        '<div class="field wide"><label for="f-name">Имя</label><div class="inp"><input id="f-name" value="' + esc(a.name) + '" autocomplete="given-name" placeholder="Как к вам обращаться"></div></div>' +
+        '<div class="field wide"><label>Где удобнее общаться</label><div class="chips">' + ["Telegram", "WhatsApp", "Instagram"].map(m => chip("messenger", m, m, a.messenger === m)).join("") + '</div></div>' +
+        '<div class="field wide"><label for="f-contact" id="contact-l">' + contactLabel() + '</label><div class="inp"><input id="f-contact" value="' + esc(a.contact) + '" autocomplete="off" placeholder="' + contactPh() + '"></div></div>' +
+        '<div class="field wide"><label for="f-city">Город / страна</label><div class="inp"><input id="f-city" value="' + esc(a.city) + '" autocomplete="address-level2" placeholder="Например, Батуми"></div></div>' +
+        '<div class="field wide"><label for="f-comment">Что ещё важно знать? <span style="font-weight:600">(необязательно)</span></label><div class="inp"><textarea id="f-comment" rows="3" placeholder="Травмы, ограничения врача, график…">' + esc(a.comment) + '</textarea></div></div>' +
+        '</div>' +
+        '<label class="consent"><input type="checkbox" id="f-consent"' + (a.consent ? " checked" : "") + '>Согласен(на) на обработку данных для связи по заявке</label>' +
+        '<div class="err" id="c-err"></div>';
+      needNext = true;
+    }
+
+    $("#root").innerHTML =
+      '<section class="view">' +
+        '<div class="q-top">' +
+          '<button class="back" type="button" id="q-back" aria-label="Назад">' + svg("i-back") + '</button>' +
+          '<div class="progress" aria-hidden="true"><i style="width:' + Math.round((ui.step + 1) / list.length * 100) + '%"></i></div>' +
+          '<span class="q-count num">' + (ui.step + 1) + '/' + list.length + '</span>' +
+        '</div>' +
+        '<div class="q-head">' + head + '</div>' + body +
+      '</section>';
+
+    $("#q-back").onclick = goBack;
+    bindOptions(key);
+
+    if (needNext) {
+      setBar('<button class="btn btn-coral" type="button" id="q-next"><span>' + (key === "contacts" ? "Получить расчёт" : "Дальше") + '</span><span class="arr">' + svg("i-arrow") + '</span></button>');
+      $("#q-next").onclick = () => next(key);
+      refreshNext(key);
+    } else setBar("");
+
+    if (key === "body") {
+      ["age", "h", "w", "gw"].forEach(k => {
+        const el = $("#f-" + k);
+        el.addEventListener("input", () => { el.value = el.value.replace(",", ".").replace(/[^\d.]/g, ""); a[k] = el.value; el.removeAttribute("aria-invalid"); $("#body-err").textContent = ""; liveHint(); refreshNext(key); });
+        el.addEventListener("keydown", e => { if (e.key === "Enter") { const n = el.closest(".field").nextElementSibling; n ? n.querySelector("input").focus() : next(key); } });
+      });
+      liveHint();
+    }
+    if (key === "contacts") {
+      [["name", "f-name"], ["contact", "f-contact"], ["city", "f-city"], ["comment", "f-comment"]].forEach(([k, id]) => {
+        $("#" + id).addEventListener("input", e => { a[k] = e.target.value; $("#c-err").textContent = ""; refreshNext(key); });
+      });
+      $("#f-consent").onchange = e => { a.consent = e.target.checked; refreshNext(key); };
+    }
+  }
+
+  const contactLabel = () => ui.a.messenger === "Telegram" ? "Ник в Telegram или телефон" : ui.a.messenger === "WhatsApp" ? "Номер WhatsApp" : "Ник в Instagram";
+  const contactPh = () => ui.a.messenger === "WhatsApp" ? "+995 …" : "@username";
+
+  function bindOptions(key) {
+    document.querySelectorAll("#root [data-g]").forEach(btn => {
+      btn.onclick = () => {
+        const gname = btn.dataset.g, k = btn.dataset.k, a = ui.a;
+        haptic("select");
+        if (gname === "struggles") {
+          a.struggles = a.struggles.includes(k) ? a.struggles.filter(x => x !== k) : a.struggles.concat(k);
+          btn.setAttribute("aria-pressed", String(a.struggles.includes(k)));
+          refreshNext(key);
+          return;
+        }
+        a[gname] = gname === "activity" ? Number(k) : k;
+        document.querySelectorAll('#root [data-g="' + gname + '"]').forEach(b => b.setAttribute("aria-pressed", String(b === btn)));
+        if (gname === "goal" && k === "postpart") a.sex = "f";
+        if (gname === "goal" && k !== "postpart") a.struggles = a.struggles.filter(x => x !== "fear");
+        if (gname === "messenger") {
+          $("#contact-l").textContent = contactLabel();
+          $("#f-contact").placeholder = contactPh();
+          refreshNext(key);
+          return;
+        }
+        if (key === "pp") { refreshNext(key); return; }
+        // Одиночный выбор — сразу следующий вопрос
+        setTimeout(() => next(key), 220);
+      };
+    });
+  }
+
+  function bodyErrors() {
+    const a = ui.a, n = k => parseFloat(a[k]);
+    const errs = [];
+    if (!(n("age") >= 16 && n("age") <= 80)) errs.push(["age", "Возраст — от 16 до 80 лет"]);
+    if (!(n("h") >= 130 && n("h") <= 220)) errs.push(["h", "Рост — от 130 до 220 см"]);
+    if (!(n("w") >= 35 && n("w") <= 250)) errs.push(["w", "Вес — от 35 до 250 кг"]);
+    if (!(n("gw") >= 35 && n("gw") <= 250)) errs.push(["gw", "Желаемый вес — от 35 до 250 кг"]);
+    return errs;
+  }
+  function liveHint() {
+    const box = $("#live"); if (!box) return;
+    const a = ui.a, w = parseFloat(a.w), h = parseFloat(a.h), gw = parseFloat(a.gw);
+    if (!(h >= 130 && h <= 220 && w >= 35 && w <= 250)) { box.innerHTML = ""; return; }
+    const bmi = Math.round(w / Math.pow(h / 100, 2) * 10) / 10;
+    let t = bmi < 18.5 ? "ниже нормы" : bmi < 25 ? "в норме" : bmi < 30 ? "немного выше нормы" : "выше нормы";
+    let diff = gw >= 35 && gw < w ? " · цель: −" + (Math.round((w - gw) * 10) / 10) + " кг" : "";
+    box.innerHTML = '<div class="live"><b class="num">ИМТ ' + bmi + '</b><span>' + t + diff + '</span></div>';
+  }
+  function contactOk() {
+    const c = ui.a.contact.trim();
+    if (ui.a.messenger === "WhatsApp") return c.replace(/\D/g, "").length >= 9;
+    return c.replace(/^@/, "").length >= 3;
+  }
+  function refreshNext(key) {
+    const btn = $("#q-next"); if (!btn) return;
+    const a = ui.a;
+    let ok = true;
+    if (key === "pp") ok = !!(a.ppWhen && a.bf);
+    if (key === "struggles") ok = a.struggles.length > 0;
+    if (key === "body") ok = ["age", "h", "w", "gw"].every(k => a[k] !== "");
+    if (key === "contacts") ok = a.name.trim().length > 1 && a.contact.trim() !== "" && a.consent;
+    btn.disabled = !ok;
+  }
+  function next(key) {
+    const a = ui.a;
+    if (key === "body") {
+      const errs = bodyErrors();
+      if (errs.length) {
+        errs.forEach(([k]) => $("#f-" + k).setAttribute("aria-invalid", "true"));
+        $("#body-err").textContent = errs[0][1];
+        haptic("error");
+        return;
+      }
+      ["age", "h", "w", "gw"].forEach(k => a[k] = parseFloat(a[k]));
+    }
+    if (key === "contacts" && !contactOk()) {
+      $("#c-err").textContent = a.messenger === "WhatsApp" ? "Проверьте номер — нужно не меньше 9 цифр" : "Укажите ник, например @username";
+      haptic("error");
+      return;
+    }
+    const list = steps();
+    if (ui.step < list.length - 1) { ui.step++; render(); window.scrollTo({ top: 0 }); }
+    else { ui.day = null; go("result"); }
+  }
+
+  /* ================= Клиент: результат + запись ================= */
+  function consultDays() {
+    const out = [];
+    let d = addDays(TODAY, 0);
+    while (out.length < 6) { if (d.getDay() !== 0) out.push(iso(d)); d = addDays(d, 1); }
+    return out;
+  }
+  function slotFree(date, time) {
+    const [hh, mm] = time.split(":").map(Number);
+    // время слота задано по Батуми — переводим в реальный момент
+    const t = Date.UTC(...date.split("-").map((v, i) => i === 1 ? v - 1 : +v), hh, mm) - CONFIG.coachTz * 60000;
+    if (t < Date.now() + 90 * 60000) return false;
+    if (store.leads.some(l => l.slot && l.slot.date === date && l.slot.time === time && l.status !== "lost")) return false;
+    return hash(date + time) % 4 !== 0;
+  }
+  function localTime(date, time) {
+    const mine = -new Date().getTimezoneOffset();
+    if (mine === CONFIG.coachTz) return "";
+    const [hh, mm] = time.split(":").map(Number);
+    let m = hh * 60 + mm + (mine - CONFIG.coachTz);
+    m = ((m % 1440) + 1440) % 1440;
+    return pad(Math.floor(m / 60)) + ":" + pad(m % 60);
+  }
+
+  function renderResult() {
+    const a = ui.a, p = calcPlan(a), fmt = FORMATS[a.format], prog = CONFIG.programs[fmt.prog];
+    const days = consultDays();
+    if (!ui.day) ui.day = (days.find(d => CONFIG.consultTimes.some(t => slotFree(d, t))) || days[0]);
+    const tzNote = -new Date().getTimezoneOffset() !== CONFIG.coachTz;
+    const first = esc(a.name.trim().split(" ")[0]);
+
+    let goalLine = p.toLose > 0
+      ? "−" + p.toLose + " кг примерно за " + p.weeks + " " + plural(p.weeks, "неделю", "недели", "недель") + " в комфортном темпе"
+      : "Без дефицита: упор на силовые и рельеф";
+
+    const tips = [];
+    if (p.bf) tips.push(["🤱", "t-sun", "Питание при ГВ", "Мягкий дефицит и +400 ккал на лактацию — молоко не пропадёт, вес уходит плавно."]);
+    if (a.struggles.includes("evening")) tips.push(["🌙", "t-navy", "Вечерние срывы", "Чаще всего это недобор белка днём. Добавьте белок в завтрак и обед — тяга вечером снизится."]);
+    if (a.struggles.includes("plateau")) tips.push(["📉", "t-coral", "Вес стоит", "Проверьте реальную калорийность за 3 дня и шаги. Часто «мало ем» — это 1000 ккал в перекусах."]);
+    if (a.struggles.includes("energy")) tips.push(["⚡", "t-mint", "Нет энергии", "Вода " + p.water + " л, 7+ часов сна и 20 минут прогулки днём дают больше, чем кофе."]);
+    if (a.struggles.includes("time")) tips.push(["⏱️", "t-sun", "Нет времени", "Хватит 3 тренировок по 30–40 минут в неделю. Дома, без дороги в зал."]);
+    if (a.struggles.includes("yoyo")) tips.push(["🔁", "t-coral", "Вес возвращается", "Без жёстких запретов: в рационе остаётся любимая еда, поэтому результат держится."]);
+    if (a.struggles.includes("food")) tips.push(["🥗", "t-mint", "Не знаю, что есть", "Начните с тарелки: половина — овощи, четверть — белок, четверть — крупы."]);
+    if (a.struggles.includes("fear")) tips.push(["🛡️", "t-navy", "Безопасно после родов", "Сначала дыхание, кор и тазовое дно, потом нагрузка. Обязательно с разрешения врача."]);
+
+    $("#root").innerHTML =
+      '<section class="view">' +
+        '<div class="q-top"><button class="back" type="button" id="q-back" aria-label="Назад">' + svg("i-back") + '</button><span class="eyebrow">Анкета заполнена</span></div>' +
+        '<h1 class="caps h-page">' + (first ? first + ", вот " : "Вот ") + '<span class="hl">ваш расчёт</span></h1>' +
+
+        '<div class="plan">' +
+          '<div><div class="eyebrow">Калорий в день</div><div class="kcal num">' + p.kcal + '<small>ккал</small></div></div>' +
+          '<div class="macros">' +
+            '<div><b class="num">' + p.protein + ' г</b><span>белок</span></div>' +
+            '<div><b class="num">' + p.fat + ' г</b><span>жиры</span></div>' +
+            '<div><b class="num">' + p.carbs + ' г</b><span>углеводы</span></div>' +
+          '</div>' +
+          '<div class="note">🎯 ' + goalLine + ' · вода ' + p.water + ' л в день</div>' +
+        '</div>' +
+
+        (tips.length ? '<div class="sec"><h2 class="h-sec">Что важно именно вам</h2><div class="card tips">' +
+          tips.slice(0, 3).map(t => '<div class="tip"><i class="' + t[1] + '">' + t[0] + '</i><div><b>' + t[2] + '</b>' + t[3] + '</div></div>').join("") + '</div></div>' : "") +
+
+        '<div class="sec"><h2 class="h-sec">Вам подходит</h2>' +
+          '<div class="card rec">' +
+            '<div class="rec-head"><b>' + esc(prog.title) + '</b><span class="price">' + esc(prog.price) + '</span></div>' +
+            '<ul>' + prog.items.map(i => '<li>' + svg("i-check") + esc(i) + '</li>').join("") + '</ul>' +
+          '</div>' +
+        '</div>' +
+
+        '<div class="sec">' +
+          '<h2 class="h-sec">Бесплатная консультация</h2>' +
+          '<p class="muted" style="margin:-4px 0 0;font-size:13.5px">' + CONFIG.consultMinutes + ' минут в ' + esc(a.messenger === "Instagram" ? "Telegram или Instagram" : a.messenger) + '. Время по Батуми' + (tzNote ? ', ниже — ваше местное' : '') + '.</p>' +
+          '<div class="days" role="group" aria-label="День">' + days.map(d => {
+            const dt = parse(d);
+            return '<button type="button" class="day" data-day="' + d + '" aria-pressed="' + (d === ui.day) + '"><span>' + (d === iso(TODAY) ? "Сегодня" : DAY_SHORT[dt.getDay()]) + '</span><b class="num">' + dt.getDate() + '</b></button>';
+          }).join("") + '</div>' +
+          '<div class="slots" role="group" aria-label="Время">' + CONFIG.consultTimes.map(t => {
+            const free = slotFree(ui.day, t), sel = a.slot && a.slot.date === ui.day && a.slot.time === t, loc = localTime(ui.day, t);
+            return '<button type="button" class="slot num" data-time="' + t + '"' + (free ? "" : " disabled") + ' aria-pressed="' + !!sel + '">' + t + (loc ? '<small>у вас ' + loc + '</small>' : "") + '</button>';
+          }).join("") + '</div>' +
+          '<button class="skip" type="button" id="no-slot">Без консультации — пусть Дмитрий напишет сам</button>' +
+        '</div>' +
+      '</section>';
+
+    $("#q-back").onclick = goBack;
+    document.querySelectorAll(".day").forEach(b => b.onclick = () => { haptic("select"); ui.day = b.dataset.day; renderResult(); });
+    document.querySelectorAll(".slot").forEach(b => b.onclick = () => { haptic("select"); a.slot = { date: ui.day, time: b.dataset.time }; renderResult(); });
+    $("#no-slot").onclick = () => { a.slot = null; submit(); };
+
+    const label = a.slot ? "Записаться · " + fmtDay(a.slot.date) + ", " + a.slot.time : "Выберите время консультации";
+    setBar('<button class="btn btn-coral" type="button" id="submit"' + (a.slot ? "" : " disabled") + '><span>' + esc(label) + '</span><span class="arr">' + svg("i-arrow") + '</span></button>');
+    $("#submit").onclick = submit;
+  }
+
+  function submit() {
+    const a = ui.a;
+    const lead = {
+      id: "l" + Date.now(), source: tg ? "Telegram" : "Instagram", createdAt: Date.now(), status: "new",
+      name: a.name.trim(), contact: a.contact.trim(), messenger: a.messenger, city: a.city.trim(), comment: a.comment.trim(),
+      goal: a.goal, sex: a.goal === "postpart" ? "f" : a.sex, ppWhen: a.ppWhen, bf: a.bf,
+      age: a.age, h: a.h, w: a.w, gw: a.gw, activity: a.activity, format: a.format,
+      struggles: a.struggles.slice(), start: a.start, slot: a.slot, tgId: tgUser ? tgUser.id : null
+    };
+    store.leads.unshift(lead);
+    save();
+    ui.lastLead = lead.id;
+    sendLead(lead);
+    haptic("success");
+    go("done");
+  }
+
+  /* В боевой версии заявка уходит на сервер: бот присылает её Дмитрию в Telegram и пишет строку в таблицу */
+  function sendLead(lead) {
+    if (!CONFIG.webhookUrl) return;
+    const payload = Object.assign({}, lead, { plan: calcPlan(lead), initData: tg ? tg.initData : "" });
+    fetch(CONFIG.webhookUrl, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) }).catch(() => { });
+  }
+
+  /* ================= Клиент: готово ================= */
+  function renderDone() {
+    const lead = store.leads.find(l => l.id === ui.lastLead);
+    if (!lead) { go("home"); return; }
+    const p = calcPlan(lead);
+    $("#root").innerHTML =
+      '<section class="view">' +
+        '<div class="done-hero">' +
+          '<div class="done-badge">' + svg("i-check", "") + '</div>' +
+          '<h1 class="caps">Заявка <span class="hl">у Дмитрия</span></h1>' +
+          '<p>' + (lead.slot
+            ? "Консультация " + fmtDay(lead.slot.date) + " в " + lead.slot.time + " (Батуми). Напомним за час — в " + esc(lead.messenger) + "."
+            : "Дмитрий получил анкету и напишет вам в " + esc(lead.messenger) + " в течение дня.") + '</p>' +
+        '</div>' +
+        '<div class="card summary">' +
+          '<div><span>Цель</span><b>' + esc(GOALS[lead.goal].t) + '</b></div>' +
+          '<div><span>Формат</span><b>' + esc(FORMATS[lead.format].t) + '</b></div>' +
+          '<div><span>Норма</span><b class="num">' + p.kcal + ' ккал · белок ' + p.protein + ' г</b></div>' +
+          '<div><span>Связь</span><b>' + esc(lead.messenger) + ' · ' + esc(lead.contact) + '</b></div>' +
+        '</div>' +
+        '<div class="sec"><h2 class="h-sec">До консультации</h2><div class="card steps">' +
+          '<div class="step"><div><b>Сделайте фото в полный рост</b><span>Спереди, сбоку, сзади — чтобы потом увидеть разницу. По желанию.</span></div></div>' +
+          '<div class="step"><div><b>Запишите, что едите 2–3 дня</b><span>Без изменений — так Дмитрий быстрее найдёт, что мешает.</span></div></div>' +
+          '<div class="step"><div><b>Подготовьте вопросы</b><span>15 минут — только про вас.</span></div></div>' +
+        '</div></div>' +
+      '</section>';
+
+    setBar('<button class="btn btn-ghost" type="button" id="close">' + (tg ? "Закрыть" : "На главную") + '</button>' +
+           '<button class="btn btn-sun" type="button" id="see-coach" style="justify-content:center">Как видит тренер</button>');
+    $("#close").onclick = () => { if (tg) tg.close(); else { ui.a = blankAnswers(); go("home"); } };
+    $("#see-coach").onclick = () => { ui.mode = "coach"; ui.filter = "all"; render(); window.scrollTo({ top: 0 }); };
+  }
+
+  /* ================= Тренер: заявки ================= */
+  const AVA_TONES = ["t-coral", "t-sun", "t-navy", "t-mint"];
+  function leadTags(l) {
+    const t = [GOALS[l.goal].short, FORMATS[l.format].short];
+    if (l.goal === "postpart") t.push(PP_WHEN[l.ppWhen] + (l.bf === "yes" ? " · ГВ" : ""));
+    if (l.w && l.gw && l.w > l.gw) t.push("−" + Math.round((l.w - l.gw) * 10) / 10 + " кг");
+    if (l.city) t.push(l.city);
+    return t;
+  }
+  function renderCoach() {
+    const L = store.leads;
+    const weekAgo = Date.now() - 7 * 86400000;
+    const week = L.filter(l => l.createdAt > weekAgo);
+    const consults = L.filter(l => l.slot && l.status !== "lost" && parse(l.slot.date) >= TODAY).length;
+    const decided = L.filter(l => l.status === "client" || l.status === "lost").length;
+    const conv = L.length ? Math.round(L.filter(l => l.status === "client").length / L.length * 100) : 0;
+    const counts = {
+      all: L.length,
+      hot: L.filter(l => temperature(l) === "hot" && l.status === "new").length,
+      new: L.filter(l => l.status === "new").length,
+      consult: L.filter(l => l.status === "consult").length,
+      client: L.filter(l => l.status === "client").length
+    };
+    const shown = L.filter(l => ui.filter === "all" ? true
+      : ui.filter === "hot" ? temperature(l) === "hot" && l.status === "new"
+      : l.status === ui.filter);
+
+    $("#root").innerHTML =
+      '<section class="view">' +
+        '<header class="top">' +
+          '<div class="ava"><img src="img/avatar.jpg" alt=""></div>' +
+          '<div><b>Заявки</b><div class="st">Приходят сами из Instagram и Telegram</div></div>' +
+        '</header>' +
+        '<div class="kpis">' +
+          '<div class="kpi accent"><b class="num">' + week.length + '</b><span>заявок за 7 дней</span></div>' +
+          '<div class="kpi"><b class="num">' + consults + '</b><span>консультаций в календаре</span></div>' +
+          '<div class="kpi"><b class="num">' + conv + '%</b><span>стали клиентами</span></div>' +
+        '</div>' +
+        '<div class="auto"><div class="a-ic">' + svg("i-bolt") + '</div><div><b>Без переписки в директе</b><p>Каждый пришёл с анкетой, параметрами и расчётом. ' + decided + ' из ' + L.length + ' уже с решением.</p></div></div>' +
+        '<div class="filters" role="group" aria-label="Фильтр">' +
+          [["all", "Все"], ["hot", "🔥 Горячие"], ["new", "Новые"], ["consult", "Консультация"], ["client", "Клиенты"]]
+            .map(([k, t]) => '<button type="button" data-f="' + k + '" aria-pressed="' + (ui.filter === k) + '">' + t + '<em class="num">' + counts[k] + '</em></button>').join("") +
+        '</div>' +
+        '<div class="leads">' + (shown.length ? shown.map(leadCard).join("") : '<div class="empty">Здесь пока пусто</div>') + '</div>' +
+      '</section>';
+
+    setBar("");
+    document.querySelectorAll("[data-f]").forEach(b => b.onclick = () => { haptic("select"); ui.filter = b.dataset.f; renderCoach(); });
+    document.querySelectorAll("[data-lead]").forEach(b => b.onclick = () => openLead(b.dataset.lead));
+  }
+  function leadCard(l) {
+    const temp = temperature(l), fresh = l.status === "new" && !store.seen.includes(l.id);
+    return '<button type="button" class="lead' + (fresh ? " fresh" : "") + '" data-lead="' + l.id + '">' +
+      '<div class="lead-top">' +
+        '<div class="l-ava ' + AVA_TONES[hash(l.name) % 4] + '">' + esc(l.name.trim().charAt(0).toUpperCase()) + '</div>' +
+        '<div><b>' + esc(l.name) + (l.age ? ', ' + l.age : "") + '</b><span class="when">' + ago(l.createdAt) + ' · ' + esc(l.source) + '</span></div>' +
+        (l.status === "new" || l.status === "consult" ? '<span class="temp ' + temp + '">' + TEMP[temp] + '</span>' : "") +
+      '</div>' +
+      '<div class="lead-tags">' + leadTags(l).map(t => '<span>' + esc(t) + '</span>').join("") + '</div>' +
+      '<div class="lead-foot">' +
+        (l.slot ? '<span class="slotline">' + svg("i-cal") + fmtDay(l.slot.date) + ', ' + l.slot.time + '</span>' : '<span class="muted">Ждёт сообщения</span>') +
+        '<span class="status st-' + l.status + '">' + STATUS[l.status] + '</span>' +
+      '</div>' +
+    '</button>';
+  }
+  function openLead(id) {
+    const l = store.leads.find(x => x.id === id); if (!l) return;
+    if (!store.seen.includes(id)) { store.seen.push(id); save(); }
+    const p = calcPlan(l);
+    const contactUrl = l.messenger === "WhatsApp" ? "https://wa.me/" + l.contact.replace(/\D/g, "")
+      : l.messenger === "Instagram" ? "https://ig.me/m/" + l.contact.replace(/^@/, "")
+      : /^@?[A-Za-z][\w]{3,}$/.test(l.contact) ? "https://t.me/" + l.contact.replace(/^@/, "") : "";
+    const draft = "Здравствуйте, " + l.name.split(" ")[0] + "! Это Дмитрий. Посмотрел вашу анкету: цель — " + GOALS[l.goal].t.toLowerCase() + ". " +
+      (l.slot ? "Жду вас на консультации " + fmtDay(l.slot.date) + " в " + l.slot.time + "." : "Когда удобно созвониться на 15 минут?");
+
+    openSheet(
+      '<div class="lead-top" style="gap:12px"><div class="l-ava ' + AVA_TONES[hash(l.name) % 4] + '" style="width:48px;height:48px;font-size:20px">' + esc(l.name.charAt(0).toUpperCase()) + '</div>' +
+        '<div><h3>' + esc(l.name) + '</h3><span class="muted" style="font-size:13px;font-weight:600">' + ago(l.createdAt) + ' · ' + esc(l.messenger) + ' ' + esc(l.contact) + '</span></div></div>' +
+      '<div class="stat-row" role="group" aria-label="Статус">' + Object.entries(STATUS).map(([k, t]) => '<button type="button" data-st="' + k + '" aria-pressed="' + (l.status === k) + '">' + t + '</button>').join("") + '</div>' +
+      '<div class="plan mini" style="padding:16px;gap:12px"><div class="eyebrow">Расчёт, который получил клиент</div>' +
+        '<div class="macros"><div><b class="num">' + p.kcal + '</b><span>ккал</span></div><div><b class="num">' + p.protein + ' г</b><span>белок</span></div><div><b class="num">' + (p.weeks ? p.weeks + " нед" : "—") + '</b><span>до цели</span></div></div></div>' +
+      '<div class="card kv">' +
+        '<div><span>Цель</span><b>' + esc(GOALS[l.goal].t) + '</b></div>' +
+        (l.goal === "postpart" ? '<div><span>После родов</span><b>' + esc(PP_WHEN[l.ppWhen]) + (l.bf === "yes" ? ", кормит грудью" : "") + '</b></div>' : "") +
+        '<div><span>Параметры</span><b class="num">' + l.age + ' ' + plural(l.age, 'год', 'года', 'лет') + ' · ' + l.h + ' см · ' + l.w + ' → ' + l.gw + ' кг</b></div>' +
+        '<div><span>ИМТ</span><b class="num">' + p.bmi + '</b></div>' +
+        '<div><span>Активность</span><b>' + esc(ACTIVITY[l.activity].t) + '</b></div>' +
+        '<div><span>Формат</span><b>' + esc(FORMATS[l.format].t) + '</b></div>' +
+        '<div><span>Мешает</span><b>' + l.struggles.map(s => esc(STRUGGLES[s])).join(", ") + '</b></div>' +
+        '<div><span>Старт</span><b>' + esc(START[l.start].t) + '</b></div>' +
+        (l.city ? '<div><span>Город</span><b>' + esc(l.city) + '</b></div>' : "") +
+        (l.slot ? '<div><span>Консультация</span><b>' + fmtDay(l.slot.date) + ', ' + l.slot.time + '</b></div>' : "") +
+        (l.comment ? '<div><span>Комментарий</span><b>' + esc(l.comment) + '</b></div>' : "") +
+      '</div>' +
+      '<div class="row2">' +
+        '<button class="btn btn-ghost" type="button" id="copy-draft">' + svg("i-copy") + 'Шаблон</button>' +
+        '<button class="btn btn-coral" type="button" id="write" style="justify-content:center"' + (contactUrl ? "" : " disabled") + '>' + svg("i-msg") + 'Написать</button>' +
+      '</div>'
+    );
+
+    document.querySelectorAll("[data-st]").forEach(b => b.onclick = () => {
+      haptic("select");
+      l.status = b.dataset.st; save();
+      document.querySelectorAll("[data-st]").forEach(x => x.setAttribute("aria-pressed", String(x === b)));
+      render();
+    });
+    $("#copy-draft").onclick = () => {
+      const done = () => toast("Сообщение скопировано — вставьте в чат");
+      if (navigator.clipboard) navigator.clipboard.writeText(draft).then(done, () => toast(draft)); else toast(draft);
+    };
+    $("#write").onclick = () => {
+      if (!contactUrl) return;
+      if (tg && contactUrl.startsWith("https://t.me/")) tg.openTelegramLink(contactUrl);
+      else if (tg) tg.openLink(contactUrl);
+      else window.open(contactUrl, "_blank", "noopener");
+    };
+    render();
+  }
+
+  /* ================= Шторка и тост ================= */
+  function openSheet(html) {
+    const root = $("#sheet-root");
+    root.innerHTML = '<div class="scrim" id="scrim"><div class="sheet" role="dialog" aria-modal="true"><div class="grip"></div>' + html + '</div></div>';
+    const close = () => { root.innerHTML = ""; document.removeEventListener("keydown", onKey); };
+    const onKey = e => { if (e.key === "Escape") close(); };
+    $("#scrim").onclick = e => { if (e.target.id === "scrim") close(); };
+    document.addEventListener("keydown", onKey);
+  }
+  let toastTimer;
+  function toast(msg) {
+    $("#toast-root").innerHTML = '<div class="toast" role="status">' + esc(msg) + '</div>';
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => { $("#toast-root").innerHTML = ""; }, 2600);
+  }
+
+  /* ================= Старт ================= */
+  document.querySelectorAll(".mode button").forEach(b => b.onclick = () => {
+    haptic("select");
+    ui.mode = b.dataset.mode;
+    if (ui.mode === "client" && ui.view === "done") { ui.a = blankAnswers(); ui.view = "home"; }
+    $("#sheet-root").innerHTML = "";
+    render(); window.scrollTo({ top: 0 });
+  });
+  render();
+})();
+</script>
+</body>
+</html>
